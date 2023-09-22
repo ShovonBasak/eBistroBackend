@@ -1,0 +1,24 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+    container_name: ebistro-django-rest
+    ports:
+      - "8000:8000"
+    env_file:
+      - .config/api.dev.env
+    depends_on:
+      - db
+    command: bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+
+  db:
+    image: postgres:latest
+    container_name: ebistro-postgres-db
+    env_file:
+      - .config/db.dev.env
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
