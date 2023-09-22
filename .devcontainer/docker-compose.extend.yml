@@ -1,0 +1,17 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+#       Git issue in devcontainer: https://github.com/microsoft/vscode-remote-release/issues/8967
+#       TODO: ii) Uncomment this bind mount, when Git issue is fixed
+#      - .:/workspace/:cached
+#       TODO: ii) Remove current bind mounts, when Git issue is fixed
+      - ./src:/workspace/src/:cached
+      - .vscode:/workspace/.vscode/:cached
+      - .config:/workspace/.config/:cached
+    command: /bin/sh -c "while sleep 1000; do :; done"
